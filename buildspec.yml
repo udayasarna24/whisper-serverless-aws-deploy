@@ -32,7 +32,7 @@ phases:
           aws lambda create-function --function-name $LAMBDA_FUNCTION --package-type Image --code ImageUri=$ECR_URI --role $LAMBDA_ROLE_ARN --timeout 300 --memory-size 3008 --region $AWS_REGION
           aws lambda wait function-active --function-name $LAMBDA_FUNCTION --region $AWS_REGION
         fi
-      # --- API Gateway: create once, skip if already exists ---
+      # --- API Gateway: create once, skip if already exists test---
       - |
         LAMBDA_ARN=$(aws lambda get-function --function-name $LAMBDA_FUNCTION --region $AWS_REGION --query 'Configuration.FunctionArn' --output text)
         API_ID=$(aws apigatewayv2 get-apis --region $AWS_REGION --query "Items[?Name=='whisper-api-$DEPLOY_ENV'].ApiId" --output text)
